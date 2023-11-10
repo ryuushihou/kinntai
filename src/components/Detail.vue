@@ -27,11 +27,82 @@ import { ref } from 'vue';
 import { Edit } from '@element-plus/icons-vue'
 
 // 選択した月を取得
-// let selectedMonth = defineProps<{ monthOfSelected: string }>()
 let selectedMonth = defineProps(['month'])
 
 const input = ref('')
 const tableData = [
+    {
+        date: '2023-11-10',
+        week: '月曜日',
+        startDate: '09:00',
+        endDate: '18:00',
+        lunchBreak: '1.00',
+        workTime: '8.00',
+        others: ''
+    },
+    {
+        date: '2023-11-11',
+        week: '火曜日',
+        startDate: '09:00',
+        endDate: '18:00',
+        lunchBreak: '1.00',
+        workTime: '8.00',
+        others: ''
+    },
+    {
+        date: '2023-11-10',
+        week: '月曜日',
+        startDate: '09:00',
+        endDate: '18:00',
+        lunchBreak: '1.00',
+        workTime: '8.00',
+        others: ''
+    },
+    {
+        date: '2023-11-11',
+        week: '火曜日',
+        startDate: '09:00',
+        endDate: '18:00',
+        lunchBreak: '1.00',
+        workTime: '8.00',
+        others: ''
+    },
+    {
+        date: '2023-11-10',
+        week: '月曜日',
+        startDate: '09:00',
+        endDate: '18:00',
+        lunchBreak: '1.00',
+        workTime: '8.00',
+        others: ''
+    },
+    {
+        date: '2023-11-11',
+        week: '火曜日',
+        startDate: '09:00',
+        endDate: '18:00',
+        lunchBreak: '1.00',
+        workTime: '8.00',
+        others: ''
+    },
+    {
+        date: '2023-11-10',
+        week: '月曜日',
+        startDate: '09:00',
+        endDate: '18:00',
+        lunchBreak: '1.00',
+        workTime: '8.00',
+        others: ''
+    },
+    {
+        date: '2023-11-11',
+        week: '火曜日',
+        startDate: '09:00',
+        endDate: '18:00',
+        lunchBreak: '1.00',
+        workTime: '8.00',
+        others: ''
+    },
     {
         date: '2023-11-10',
         week: '月曜日',

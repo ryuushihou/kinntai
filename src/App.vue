@@ -45,43 +45,15 @@
 </template>
 <script setup lang="ts">
 import { Sunny, Moon } from '@element-plus/icons-vue';
-import { ElMessage } from 'element-plus'
 import DetailVue from './components/Detail.vue'
-import { useDark, useToggle } from '@vueuse/core'
-import { ref } from 'vue'
+import useSelectedMonth from './hooks/appHook/useSelectedMonth'
+import useLayout from './hooks/appHook/useLayout'
 
-// shadow css
-const getCssVarName = (type: string) => {
-  return `--el-box-shadow${type ? '-' : ''}${type}`
-}
+// 選択した月に関するHooks
+const { selectedMonth, monthOfSelected, toKinndai, backToSelectMonth } = useSelectedMonth()
 
-// 月を選択した場合、勤務表を表示する
-let selectedMonth = ref<boolean>(false)
-// 選択した月
-let monthOfSelected = ref<string>('')
-
-// 月を選択後に勤務表作成画面へ遷移
-const toKinndai = () => {
-  if ((monthOfSelected.value === '') || (monthOfSelected.value === null)) {
-    ElMessage.error('月分を選択ください')
-    return
-  }
-  selectedMonth.value = !selectedMonth.value
-}
-
-// 月を選択へ戻る
-const backToSelectMonth = () => {
-  selectedMonth.value = false
-}
-
-// ダックモード・ライトモードの切り替え
-const theme = ref<boolean>(false)
-const isDark = useDark({
-  storageKey: 'useDarkKey',
-  valueDark: 'dark',
-  valueLight: 'light'
-})
-const toggle = useToggle(isDark)
+// layoutに関するHooks
+const { getCssVarName, theme, toggle } = useLayout()
 
 </script>
 <style scoped lang="scss">
@@ -93,4 +65,4 @@ const toggle = useToggle(isDark)
   align-items: center;
   justify-content: center;
 }
-</style>
+</style>./hooks/appHook/useSelectedMonth./hooks/appHook/useLayout
