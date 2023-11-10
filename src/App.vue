@@ -13,22 +13,66 @@
         </a>
       </div>
     </div>
-    <p style="text-align: center;">勤務表</p>
-    <div style="display: flex; justify-content: center; align-items: center;">
-      <DetailVue />
+    <div v-if="selectedMonth">
+      <p style="text-align: center;">勤務表</p>
+      <div style="display: flex; justify-content: center; align-items: center;" class="inline-flex" h="30" w="30" m="2"
+        :style="{
+          boxShadow: `var(${getCssVarName('dark')})`
+        }">
+        <DetailVue :month="monthOfSelected" />
+      </div>
+      <div style="text-align: center;margin-top: 20px;">
+        <el-button round @click="backToSelectMonth()">月分選択へ</el-button>
+        <el-button round>PDF出力</el-button>
+        <el-button round>保存</el-button>
+      </div>
     </div>
-    <br />
-    <div style="text-align: center;">
-      <el-button round>PDF出力</el-button>
-      <el-button round>保存</el-button>
+    <div v-if="!selectedMonth" style="margin-top: 20%;display: flex;align-items: center;">
+      <svg t="1699624399312" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        p-id="7007" width="48" height="48">
+        <path
+          d="M896 85.333333h-170.666667V42.666667a42.666667 42.666667 0 0 0-85.333333 0v42.666666H384V42.666667a42.666667 42.666667 0 0 0-85.333333 0v42.666666H128a128 128 0 0 0-128 128v682.666667a128 128 0 0 0 128 128h768a128 128 0 0 0 128-128V213.333333a128 128 0 0 0-128-128zM128 170.666667h170.666667v42.666666a42.666667 42.666667 0 0 0 85.333333 0V170.666667h256v42.666666a42.666667 42.666667 0 0 0 85.333333 0V170.666667h170.666667a42.666667 42.666667 0 0 1 42.666667 42.666666v128H85.333333V213.333333a42.666667 42.666667 0 0 1 42.666667-42.666666z m768 768H128a42.666667 42.666667 0 0 1-42.666667-42.666667V426.666667h853.333334v469.333333a42.666667 42.666667 0 0 1-42.666667 42.666667z"
+          fill="#333333" p-id="7008"></path>
+        <path
+          d="M663.04 559.786667l-213.333333 213.333333-90.026667-92.586667a42.666667 42.666667 0 0 0-60.16 0 42.666667 42.666667 0 0 0 0 60.586667l120.746667 120.746667a42.666667 42.666667 0 0 0 30.293333 12.8 42.666667 42.666667 0 0 0 30.293333-12.8l241.493334-241.493334a42.666667 42.666667 0 0 0 0-60.586666 42.666667 42.666667 0 0 0-59.306667 0z"
+          fill="#333333" p-id="7009"></path>
+      </svg>
+      <el-date-picker style="margin-left: 10px;" v-model="monthOfSelected" type="month" value-format="YYYY年MM月"
+        size="large" placeholder="月分選択ください" />
+      <el-button style="margin-left: 10px;" round @click="toKinndai()">勤務表へ</el-button>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { Sunny, Moon } from '@element-plus/icons-vue';
+import { ElMessage } from 'element-plus'
 import DetailVue from './components/Detail.vue'
 import { useDark, useToggle } from '@vueuse/core'
 import { ref } from 'vue'
+
+// shadow css
+const getCssVarName = (type: string) => {
+  return `--el-box-shadow${type ? '-' : ''}${type}`
+}
+
+// 月を選択した場合、勤務表を表示する
+let selectedMonth = ref<boolean>(false)
+// 選択した月
+let monthOfSelected = ref<string>('')
+
+// 月を選択後に勤務表作成画面へ遷移
+const toKinndai = () => {
+  if ((monthOfSelected.value === '') || (monthOfSelected.value === null)) {
+    ElMessage.error('月分を選択ください')
+    return
+  }
+  selectedMonth.value = !selectedMonth.value
+}
+
+// 月を選択へ戻る
+const backToSelectMonth = () => {
+  selectedMonth.value = false
+}
 
 // ダックモード・ライトモードの切り替え
 const theme = ref<boolean>(false)
@@ -48,4 +92,5 @@ const toggle = useToggle(isDark)
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}</style>
+}
+</style>

@@ -1,5 +1,6 @@
 <template>
     <div class="tbl">
+        <el-text style="margin-left: 10px;" tag="b" type="info" size="large">{{ selectedMonth.month }}</el-text>
         <el-table :data="tableData" border style="width: 100%" :row-style="rowState" :header-cell-style="headerRowState">
             <el-table-column prop="date" label="日付" width="110" />
             <el-table-column prop="week" label="曜日" width="70" />
@@ -22,12 +23,12 @@
 </template>
   
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { Edit } from '@element-plus/icons-vue'
 
-onMounted(() => {
-
-})
+// 選択した月を取得
+// let selectedMonth = defineProps<{ monthOfSelected: string }>()
+let selectedMonth = defineProps(['month'])
 
 const input = ref('')
 const tableData = [
@@ -74,13 +75,6 @@ const headerRowState = ({ row, rowIndex }: { row: string, rowIndex: string }) =>
 .tbl {
     ::v-deep(.el-table .cell) {
         text-align: center;
-    }
-
-    ::v-deep(.el-table) {
-        border-collapse: collapse;
-        border-spacing: 0;
-        border-radius: 20px;
-        border: solid 10px rgb(74, 74, 74);
     }
 }
 </style>
