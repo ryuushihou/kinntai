@@ -23,11 +23,21 @@
 </template>
   
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { Edit } from '@element-plus/icons-vue'
+import useMonth from '../hooks/detailHook/useMonth';
 
 // 選択した月を取得
 let selectedMonth = defineProps(['month'])
+
+// 選択した月の情報を取得
+const { getMonthInfo, calendarData } = useMonth()
+
+onMounted(() => {
+    const formattedMonth = selectedMonth.month.replace(/年/, '-').replace(/月/, '')
+    getMonthInfo(formattedMonth)
+    console.log('@@@', calendarData.value);
+})
 
 const input = ref('')
 const tableData = [
