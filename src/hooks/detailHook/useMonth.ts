@@ -8,7 +8,11 @@ export default function () {
         date: number,
         dayOfWeek: string,
         isCurrentMonth: boolean,
-        holidayName: string
+        holidayName: string,
+        lunchBreak: string,
+        workTime: string,
+        others: string,
+        enEdit: boolean
     }
     interface calendarDataInfo {
         year: number,
@@ -68,7 +72,11 @@ export default function () {
             const dayOfWeek = weekNameConvert(currentDatePointer.getDay())
             const isCurrentMonth = currentDatePointer.getMonth() === currentDate.getMonth()
             const holidayName = ''
-            const day = { date, dayOfWeek, isCurrentMonth, holidayName }
+            const lunchBreak = '1:00'
+            const workTime = '8:00'
+            const others = ''
+            const enEdit = false
+            const day = { date, dayOfWeek, isCurrentMonth, holidayName, lunchBreak, workTime, others, enEdit }
             calendarData.value.days.push(day)
             currentDatePointer.setDate(day.date + 1)
         }

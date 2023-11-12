@@ -1,16 +1,24 @@
 <template>
     <div class="tbl">
         <el-text style="margin-left: 10px;" tag="b" type="info" size="large">{{ selectedMonth.month }}</el-text>
-        <el-table :data="tableData" border style="width: 100%" :row-style="rowState" :header-cell-style="headerRowState">
-            <el-table-column prop="date" label="日付" width="110" />
-            <el-table-column prop="week" label="曜日" width="70" />
-            <el-table-column prop="startDate" label="開始時刻" width="130">
+        <el-table :data="calendarData.days" border style="width: 100%" :row-style="rowState" table-layout='auto'
+            :header-cell-style="headerRowState">
+            <el-table-column prop="date" label="日付" width="60" />
+            <el-table-column prop="holidayName" label="曜日">
+                <template #default="scope">
+                    <div style="display: flex; align-items: center;white-space: nowrap;">
+                        <span style=" margin-left: 10px">{{ scope.row.dayOfWeek }}</span>
+                        <span style="margin-left: 10px;color:red">{{ scope.row.holidayName }}</span>
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="startDate" label="開始時刻" width="150">
                 <el-time-select v-model="input" start="09:00" step="00:15" end="23:59" placeholder="00:00" />
             </el-table-column>
-            <el-table-column prop="endDate" label="終了時刻" width="130">
+            <el-table-column prop="endDate" label="終了時刻" width="150">
                 <el-time-select v-model="input" start="09:00" step="00:15" end="23:59" placeholder="00:00" />
             </el-table-column>
-            <el-table-column prop="lunchBreak" label="昼休(時間)" width="100" />
+            <el-table-column prop="lunchBreak" label="昼休(時間)" width="110" />
             <el-table-column prop="workTime" label="勤務時間" width="100" />
             <el-table-column prop="others" label="備考" width="180">
                 <el-input v-model="input" :rows="1" type="textarea" />
@@ -40,98 +48,6 @@ onMounted(() => {
 })
 
 const input = ref('')
-const tableData = [
-    {
-        date: '2023-11-10',
-        week: '月曜日',
-        startDate: '09:00',
-        endDate: '18:00',
-        lunchBreak: '1.00',
-        workTime: '8.00',
-        others: ''
-    },
-    {
-        date: '2023-11-11',
-        week: '火曜日',
-        startDate: '09:00',
-        endDate: '18:00',
-        lunchBreak: '1.00',
-        workTime: '8.00',
-        others: ''
-    },
-    {
-        date: '2023-11-10',
-        week: '月曜日',
-        startDate: '09:00',
-        endDate: '18:00',
-        lunchBreak: '1.00',
-        workTime: '8.00',
-        others: ''
-    },
-    {
-        date: '2023-11-11',
-        week: '火曜日',
-        startDate: '09:00',
-        endDate: '18:00',
-        lunchBreak: '1.00',
-        workTime: '8.00',
-        others: ''
-    },
-    {
-        date: '2023-11-10',
-        week: '月曜日',
-        startDate: '09:00',
-        endDate: '18:00',
-        lunchBreak: '1.00',
-        workTime: '8.00',
-        others: ''
-    },
-    {
-        date: '2023-11-11',
-        week: '火曜日',
-        startDate: '09:00',
-        endDate: '18:00',
-        lunchBreak: '1.00',
-        workTime: '8.00',
-        others: ''
-    },
-    {
-        date: '2023-11-10',
-        week: '月曜日',
-        startDate: '09:00',
-        endDate: '18:00',
-        lunchBreak: '1.00',
-        workTime: '8.00',
-        others: ''
-    },
-    {
-        date: '2023-11-11',
-        week: '火曜日',
-        startDate: '09:00',
-        endDate: '18:00',
-        lunchBreak: '1.00',
-        workTime: '8.00',
-        others: ''
-    },
-    {
-        date: '2023-11-10',
-        week: '月曜日',
-        startDate: '09:00',
-        endDate: '18:00',
-        lunchBreak: '1.00',
-        workTime: '8.00',
-        others: ''
-    },
-    {
-        date: '2023-11-11',
-        week: '火曜日',
-        startDate: '09:00',
-        endDate: '18:00',
-        lunchBreak: '1.00',
-        workTime: '8.00',
-        others: ''
-    },
-]
 
 // 行内css
 const rowState = ({ row, rowIndex }: { row: string, rowIndex: string }) => {
