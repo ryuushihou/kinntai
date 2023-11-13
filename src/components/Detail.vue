@@ -56,9 +56,7 @@
             </el-table-column>
             <el-table-column prop="enEdit" label="操作" width="60">
                 <template #default="scope">
-                    <el-tooltip content="Bottom center" effect="customized">
-                        <el-button :icon="Edit" circle @click="scope.row.enEdit = !scope.row.enEdit" />
-                    </el-tooltip>
+                    <el-button :icon="Edit" circle @click="scope.row.enEdit = !scope.row.enEdit" />
                 </template>
             </el-table-column>
         </el-table>
