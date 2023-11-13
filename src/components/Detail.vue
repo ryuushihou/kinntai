@@ -36,7 +36,7 @@ import { Edit } from '@element-plus/icons-vue'
 import useMonth from '../hooks/detailHook/useMonth';
 
 // 選択した月を取得
-let selectedMonth = defineProps(['month'])
+let selectedMonth = defineProps(['month', 'theme'])
 
 // 選択した月の情報を取得
 const { getMonthInfo, calendarData } = useMonth()
@@ -50,10 +50,30 @@ onMounted(() => {
 const input = ref('')
 
 // 行内css
-const rowState = ({ row, rowIndex }: { row: string, rowIndex: string }) => {
-    if (rowIndex == '1') {
-        return {
-            // backgroundColor: 'red'
+interface daysType {
+    date: number,
+    dayOfWeek: string,
+    isCurrentMonth: boolean,
+    holidayName: string,
+    lunchBreak: string,
+    workTime: string,
+    others: string,
+    enEdit: boolean
+}
+const rowState = ({ row, rowIndex }: { row: daysType, rowIndex: number }) => {
+    backgroundColor: 'red'
+    if (row.dayOfWeek === '土曜日' || row.dayOfWeek === '日曜日' || row.holidayName !== '') {
+        console.log(selectedMonth.theme);
+        if (!selectedMonth.theme) {
+            return {
+                backgroundColor: 'rgb(223 223 223)',
+                color: 'green'
+            }
+        } else {
+            return {
+                backgroundColor: '#292929',
+                color: '#8c993f'
+            }
         }
     }
 }

@@ -19,7 +19,7 @@
         :style="{
           boxShadow: `var(${getCssVarName('dark')})`
         }">
-        <DetailVue :month="monthOfSelected" />
+        <DetailVue :month="monthOfSelected" :theme="theme" />
       </div>
       <div style="text-align: center;margin-top: 20px;">
         <el-button round @click="backToSelectMonth()">月分選択へ</el-button>
