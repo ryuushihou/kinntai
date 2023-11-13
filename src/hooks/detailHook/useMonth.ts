@@ -9,6 +9,8 @@ export default function () {
         dayOfWeek: string,
         isCurrentMonth: boolean,
         holidayName: string,
+        startTime: string,
+        endTime: string,
         lunchBreak: string,
         workTime: string,
         others: string,
@@ -72,11 +74,13 @@ export default function () {
             const dayOfWeek = weekNameConvert(currentDatePointer.getDay())
             const isCurrentMonth = currentDatePointer.getMonth() === currentDate.getMonth()
             const holidayName = ''
-            const lunchBreak = '1:00'
-            const workTime = '8:00'
+            const lunchBreak = '1.00'
+            const startTime = '00:00'
+            const endTime = '00:00'
+            const workTime = '8.00'
             const others = ''
             const enEdit = false
-            const day = { date, dayOfWeek, isCurrentMonth, holidayName, lunchBreak, workTime, others, enEdit }
+            const day = { date, dayOfWeek, isCurrentMonth, holidayName, startTime, endTime, lunchBreak, workTime, others, enEdit }
             calendarData.value.days.push(day)
             currentDatePointer.setDate(day.date + 1)
         }
