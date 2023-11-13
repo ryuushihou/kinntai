@@ -1,6 +1,5 @@
 <template>
     <div class="tbl">
-        <el-text style="margin-left: 10px;" tag="b" type="info" size="large">{{ selectedMonth.month }}</el-text>
         <el-table :data="calendarData.days" border style="width: 100%" :row-style="rowState" table-layout='auto'
             :header-cell-style="headerRowState">
             <el-table-column prop="date" label="日付" width="60" />
@@ -57,7 +56,9 @@
             </el-table-column>
             <el-table-column prop="enEdit" label="操作" width="60">
                 <template #default="scope">
-                    <el-button :icon="Edit" circle @click="scope.row.enEdit = !scope.row.enEdit" />
+                    <el-tooltip content="Bottom center" effect="customized">
+                        <el-button :icon="Edit" circle @click="scope.row.enEdit = !scope.row.enEdit" />
+                    </el-tooltip>
                 </template>
             </el-table-column>
         </el-table>

@@ -15,16 +15,19 @@
     </div>
     <div v-if="selectedMonth">
       <p style="text-align: center;">勤務表</p>
-      <div style="display: flex; justify-content: center; align-items: center;" class="inline-flex" h="30" w="30" m="2"
-        :style="{
+      <div style="display: flex; align-items: center; justify-content: center; text-align: center; margin-top: 20px;">
+        <el-text style="margin-left: 10px;" tag="b" type="info" size="large">{{ monthOfSelected }}</el-text>
+        <div style="margin-left: auto;">
+          <el-button round @click="backToSelectMonth()">月分選択へ</el-button>
+          <el-button round>PDF出力</el-button>
+          <el-button round>保存</el-button>
+        </div>
+      </div>
+      <div style="margin-top: 10px; display: flex; justify-content: center; align-items: center;" class="inline-flex"
+        h="30" w="30" m="2" :style="{
           boxShadow: `var(${getCssVarName('dark')})`
         }">
         <DetailVue :month="monthOfSelected" :theme="theme" />
-      </div>
-      <div style="text-align: center;margin-top: 20px;">
-        <el-button round @click="backToSelectMonth()">月分選択へ</el-button>
-        <el-button round>PDF出力</el-button>
-        <el-button round>保存</el-button>
       </div>
     </div>
     <div v-if="!selectedMonth" style="margin-top: 20%;display: flex;align-items: center;">
