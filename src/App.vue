@@ -19,7 +19,7 @@
         <el-text style="margin-left: 10px;" tag="b" type="info" size="large">{{ monthOfSelected }}</el-text>
         <div style="margin-left: auto;">
           <el-button round @click="backToSelectMonth()">月分選択へ</el-button>
-          <el-button round>PDF出力</el-button>
+          <el-button round @click="print()">PDF出力</el-button>
           <el-button round>保存</el-button>
         </div>
       </div>
@@ -27,7 +27,7 @@
         h="30" w="30" m="2" :style="{
           boxShadow: `var(${getCssVarName('dark')})`
         }">
-        <DetailVue :month="monthOfSelected" :theme="theme" />
+        <Detail ref='detailRef' :month="monthOfSelected" :theme="theme" />
       </div>
     </div>
     <div v-if="!selectedMonth" style="margin-top: 20%;display: flex;align-items: center;">
@@ -47,8 +47,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Sunny, Moon } from '@element-plus/icons-vue';
-import DetailVue from './components/Detail.vue'
+import { ref } from 'vue'
+import { Sunny, Moon } from '@element-plus/icons-vue'
+import Detail from './components/Detail.vue'
 import useSelectedMonth from './hooks/appHook/useSelectedMonth'
 import useLayout from './hooks/appHook/useLayout'
 
@@ -57,6 +58,14 @@ const { selectedMonth, monthOfSelected, toKinndai, backToSelectMonth } = useSele
 
 // layoutに関するHooks
 const { getCssVarName, theme, toggle } = useLayout()
+
+// pdf出力
+let detailRef = ref()
+const print = () => {
+  if (detailRef.value) {
+    detailRef.value.pdfExport()
+  }
+}
 
 </script>
 <style scoped lang="scss">
@@ -68,4 +77,4 @@ const { getCssVarName, theme, toggle } = useLayout()
   align-items: center;
   justify-content: center;
 }
-</style>./hooks/appHook/useSelectedMonth./hooks/appHook/useLayout
+</style>

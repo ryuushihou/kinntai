@@ -1,7 +1,6 @@
 <template>
-    <div class="tbl">
-        <el-table :data="calendarData.days" border style="width: 100%" :row-style="rowState" table-layout='auto'
-            :header-cell-style="headerRowState">
+    <div id="tbl" class="tbl">
+        <el-table :data="calendarData.days" border style="width: 100%" :row-style="rowState" table-layout='auto'>
             <el-table-column prop="date" label="日付" width="60" />
             <el-table-column label="曜日">
                 <template #default="scope">
@@ -54,7 +53,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="enEdit" label="操作" width="60">
+            <el-table-column v-if="usebable" prop="enEdit" label="操作" width="60">
                 <template #default="scope">
                     <el-button :icon="Edit" circle @click="scope.row.enEdit = !scope.row.enEdit" />
                 </template>
@@ -64,15 +63,35 @@
 </template>
   
 <script lang="ts" setup>
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { Edit } from '@element-plus/icons-vue'
 import useMonth from '../hooks/detailHook/useMonth';
+import printJS from 'print-js';
 
 // 選択した月を取得
 let selectedMonth = defineProps(['month', 'theme'])
 
 // 選択した月の情報を取得
 const { getMonthInfo, calendarData } = useMonth()
+
+// pdf出力
+let usebable = ref<boolean>(true)
+const pdfExport = () => {
+    usebable.value = false
+    setTimeout(() => {
+        const style = '@page{}' + '@media print {td{border:1px solid #000;text-align:center;height:40px}th{border:1px solid #000}}'
+        printJS({
+            printable: 'tbl',
+            type: 'html',
+            scanStyles: false,
+            style: style,
+            targetStyle: ['*']
+        })
+        usebable.value = true
+    })
+}
+
+defineExpose({ pdfExport })
 
 // データ関する操作
 
@@ -95,7 +114,6 @@ interface daysType {
     enEdit: boolean
 }
 const rowState = ({ row, rowIndex }: { row: daysType, rowIndex: number }) => {
-    backgroundColor: 'red'
     if (row.dayOfWeek === '土曜日' || row.dayOfWeek === '日曜日' || row.holidayName !== '') {
         if (!selectedMonth.theme) {
             return {
@@ -110,15 +128,6 @@ const rowState = ({ row, rowIndex }: { row: daysType, rowIndex: number }) => {
         }
     }
 }
-
-// ヘッダcss
-const headerRowState = ({ row, rowIndex }: { row: string, rowIndex: string }) => {
-    if (rowIndex == '0') {
-        return {
-            // backgroundColor: '#E8E9E9 !important'
-        };
-    }
-};
 
 </script>
 <style scoped lang="scss">
