@@ -1,5 +1,5 @@
 import axios from "axios"
-import { ref } from "vue"
+import { computed, ref } from "vue"
 
 export default function () {
 
@@ -75,14 +75,24 @@ export default function () {
             const isCurrentMonth = currentDatePointer.getMonth() === currentDate.getMonth()
             const holidayName = ''
             const lunchBreak = '1.00'
-            const startTime = '00:00'
-            const endTime = '00:00'
-            const workTime = '8.00'
+
+            let startTime = ref('00:00')
+            let endTime = ref('02:00')
+
+            // 毎日作業総時間
+            const workTime = computed(() => {
+                let startTime2 = new Date(`1970-01-01T${startTime.value}:00.000Z`)
+                let endTime2 = new Date(`1970-01-01T${endTime.value}:00.000Z`)
+                let timeDifference: number = (endTime2.getTime() as number) - (startTime2.getTime() as number)
+                return Math.floor(timeDifference / (1000 * 60 * 60)).toString() + '.'
+                    + Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)).toString()
+            })
+
             const others = ''
             const enEdit = false
-            const day = { date, dayOfWeek, isCurrentMonth, holidayName, startTime, endTime, lunchBreak, workTime, others, enEdit }
-            calendarData.value.days.push(day)
-            currentDatePointer.setDate(day.date + 1)
+            const day = ref({ date, dayOfWeek, isCurrentMonth, holidayName, startTime, endTime, lunchBreak, workTime, others, enEdit })
+            calendarData.value.days.push(day.value)
+            currentDatePointer.setDate(day.value.date + 1)
         }
         getHolidayInfo(targetDate, calendarData.value.days)
     }
@@ -101,7 +111,7 @@ export default function () {
             days.forEach(item => {
                 // 休日場合、昼休時間を00:00に設定
                 if (['土曜日', '日曜日'].includes(item.dayOfWeek)) {
-                    item.lunchBreak = '00:00'
+                    item.lunchBreak = '0.00'
                 }
                 // 祝日名設定
                 let itemString: string = String(item.date).padStart(2, '0')
@@ -110,7 +120,7 @@ export default function () {
                     if (arrItem.date === itemString) {
                         item.holidayName = arrItem.name
                         // 昼休時間を00:00に設定
-                        item.lunchBreak = '00:00'
+                        item.lunchBreak = '0.00'
                     }
                 })
             })
