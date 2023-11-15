@@ -89,7 +89,7 @@ export default function () {
 
     // 曜日を漢字に変換
     const weekNameConvert = (value: number) => {
-        const daysOfWeek = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日']
+        const daysOfWeek: string[] = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日']
         return daysOfWeek[value]
     }
 
@@ -99,11 +99,18 @@ export default function () {
         if (response.status === 200) {
             holidaysArr.value = response.data
             days.forEach(item => {
+                // 休日場合、昼休時間を00:00に設定
+                if (['土曜日', '日曜日'].includes(item.dayOfWeek)) {
+                    item.lunchBreak = '00:00'
+                }
+                // 祝日名設定
                 let itemString: string = String(item.date).padStart(2, '0')
                 itemString = targetMonth + '-' + itemString
                 holidaysArr.value?.forEach(arrItem => {
                     if (arrItem.date === itemString) {
                         item.holidayName = arrItem.name
+                        // 昼休時間を00:00に設定
+                        item.lunchBreak = '00:00'
                     }
                 })
             })
