@@ -20,7 +20,7 @@
         <div style="margin-left: auto;">
           <el-button round @click="backToSelectMonth()">月分選択へ</el-button>
           <el-button round @click="print()">PDF出力</el-button>
-          <el-button round>保存</el-button>
+          <el-button round @click="save()">保存</el-button>
         </div>
       </div>
       <div style="margin-top: 10px; display: flex; justify-content: center; align-items: center;" class="inline-flex"
@@ -52,6 +52,7 @@ import { Sunny, Moon } from '@element-plus/icons-vue'
 import Detail from './components/Detail.vue'
 import useSelectedMonth from './hooks/appHook/useSelectedMonth'
 import useLayout from './hooks/appHook/useLayout'
+import useCalendarDataStore from './store/calendarData'
 
 // 選択した月に関するHooks
 const { selectedMonth, monthOfSelected, toKinndai, backToSelectMonth } = useSelectedMonth()
@@ -64,6 +65,23 @@ let detailRef = ref()
 const print = () => {
   if (detailRef.value) {
     detailRef.value.pdfExport()
+  }
+}
+
+// 保存
+let calendarDataInfo = useCalendarDataStore()
+const save = () => {
+  const formattedMonth = monthOfSelected.value.replace(/年/, '-').replace(/月/, '')
+  const [year, month] = formattedMonth.split('-')
+  let existCalendarData: boolean = false
+  calendarDataInfo.calendarDataArr.forEach(arr => {
+    if (arr.year === parseInt(year) && arr.month === parseInt(month)) {
+      arr = detailRef.value.calendarData
+      existCalendarData = true
+    }
+  })
+  if (!existCalendarData) {
+    calendarDataInfo.calendarDataArr.push(detailRef.value.calendarData)
   }
 }
 

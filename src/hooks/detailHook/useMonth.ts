@@ -1,5 +1,6 @@
 import axios from "axios"
 import { computed, ref } from "vue"
+import useCalendarDataStore from "../../store/calendarData"
 
 export default function () {
 
@@ -48,7 +49,10 @@ export default function () {
 
     let holidaysArr = ref<holidayArrType[]>()
 
+    // 勤務表データ作成
     const getMonthInfo = (targetDate: string) => {
+
+        let calendarDataInfo = useCalendarDataStore()
 
         const [year, month] = targetDate.split('-')
         // 目標年
@@ -68,33 +72,49 @@ export default function () {
         calendarData.value.month = targetMonth
         calendarData.value.days = []
 
-        let currentDatePointer = new Date(firstDay);
-        while (currentDatePointer <= lastDay) {
-            const date = currentDatePointer.getDate()
-            const dayOfWeek = weekNameConvert(currentDatePointer.getDay())
-            const isCurrentMonth = currentDatePointer.getMonth() === currentDate.getMonth()
-            const holidayName = ''
-            const lunchBreak = '1.00'
+        // 目標月の勤務表既存データがあれば、読み込む
+        let existCalendarData: boolean = false
+        calendarDataInfo.calendarDataArr.forEach(arr => {
+            if (arr.year === targettYear && arr.month === targetMonth) {
+                calendarData.value.days = arr.days
+                existCalendarData = true
+            }
+        })
 
-            let startTime = ref('00:00')
-            let endTime = ref('02:00')
+        if (!existCalendarData) {
+            let currentDatePointer = new Date(firstDay);
+            while (currentDatePointer <= lastDay) {
+                const date = currentDatePointer.getDate()
+                const dayOfWeek = weekNameConvert(currentDatePointer.getDay())
+                const isCurrentMonth = currentDatePointer.getMonth() === currentDate.getMonth()
+                const holidayName = ''
+                const lunchBreak = '1.00'
+                const enEdit = false
 
-            // 毎日作業総時間
-            const workTime = computed(() => {
-                let startTime2 = new Date(`1970-01-01T${startTime.value}:00.000Z`)
-                let endTime2 = new Date(`1970-01-01T${endTime.value}:00.000Z`)
-                let timeDifference: number = (endTime2.getTime() as number) - (startTime2.getTime() as number)
-                return Math.floor(timeDifference / (1000 * 60 * 60)).toString() + '.'
-                    + Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)).toString()
-            })
+                // 作業開始日と終了日
+                let startTime = ref<string>('00:00')
+                let endTime = ref<string>('02:00')
+                // 毎日作業総時間
+                const workTime = computed(() => {
+                    let startTime2 = new Date(`1970-01-01T${startTime.value}:00.000Z`)
+                    let endTime2 = new Date(`1970-01-01T${endTime.value}:00.000Z`)
+                    let timeDifference: number = (endTime2.getTime() as number) - (startTime2.getTime() as number)
+                    return Math.floor(timeDifference / (1000 * 60 * 60)).toString() + '.'
+                        + Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)).toString()
+                })
 
-            const others = ''
-            const enEdit = false
-            const day = ref({ date, dayOfWeek, isCurrentMonth, holidayName, startTime, endTime, lunchBreak, workTime, others, enEdit })
-            calendarData.value.days.push(day.value)
-            currentDatePointer.setDate(day.value.date + 1)
+                // 備考
+                const others = ref<string>('')
+
+                const day = ref({ date, dayOfWeek, isCurrentMonth, holidayName, startTime, endTime, lunchBreak, workTime, others, enEdit })
+                calendarData.value.days.push(day.value)
+                currentDatePointer.setDate(day.value.date + 1)
+            }
+
+            // 祝日取得と設定
+            getHolidayInfo(targetDate, calendarData.value.days)
         }
-        getHolidayInfo(targetDate, calendarData.value.days)
+
     }
 
     // 曜日を漢字に変換
@@ -103,7 +123,6 @@ export default function () {
         return daysOfWeek[value]
     }
 
-    // 祝日取得
     const getHolidayInfo = async (targetMonth: string, days: daysType[]) => {
         const response: holidayResponseType = await axios.get(`https://api.national-holidays.jp/${targetMonth}`)
         if (response.status === 200) {

@@ -91,14 +91,12 @@ const pdfExport = () => {
     })
 }
 
-defineExpose({ pdfExport })
-
-// データ関する操作
-
 onMounted(() => {
     const formattedMonth = selectedMonth.month.replace(/年/, '-').replace(/月/, '')
     getMonthInfo(formattedMonth)
 })
+
+defineExpose({ pdfExport, calendarData })
 
 // 行内css
 interface daysType {
