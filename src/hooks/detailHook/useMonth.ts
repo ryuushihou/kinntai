@@ -1,5 +1,5 @@
 import axios from "axios"
-import { computed, ref } from "vue"
+import { ref } from "vue"
 import useCalendarDataStore from "../../store/calendarData"
 
 export default function () {
