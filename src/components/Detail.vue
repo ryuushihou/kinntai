@@ -63,10 +63,10 @@
 </template>
   
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { Edit } from '@element-plus/icons-vue'
-import useMonth from '../hooks/detailHook/useMonth';
-import printJS from 'print-js';
+import useMonth from '../hooks/detailHook/useMonth'
+import printJS from 'print-js'
 
 // 選択した月を取得
 let selectedMonth = defineProps(['month', 'theme'])
@@ -91,12 +91,22 @@ const pdfExport = () => {
     })
 }
 
+defineExpose({ pdfExport, calendarData })
+
 onMounted(() => {
     const formattedMonth = selectedMonth.month.replace(/年/, '-').replace(/月/, '')
     getMonthInfo(formattedMonth)
 })
 
-defineExpose({ pdfExport, calendarData })
+watch(() => calendarData.value, () => {
+    calendarData.value.days.forEach(day => {
+        let startTime = new Date(`1970-01-01T${day.startTime}:00.000Z`)
+        let endTime = new Date(`1970-01-01T${day.endTime}:00.000Z`)
+        let timeDifference: number = (endTime.getTime() as number) - (startTime.getTime() as number)
+        day.workTime = Math.floor(timeDifference / (1000 * 60 * 60)).toString() + '.'
+            + Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)).toString()
+    })
+}, { deep: true })
 
 // 行内css
 interface daysType {

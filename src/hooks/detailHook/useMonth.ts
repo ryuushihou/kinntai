@@ -76,6 +76,7 @@ export default function () {
         let existCalendarData: boolean = false
         calendarDataInfo.calendarDataArr.forEach(arr => {
             if (arr.year === targettYear && arr.month === targetMonth) {
+                arr.days.forEach(day => day.enEdit = false)
                 calendarData.value.days = arr.days
                 existCalendarData = true
             }
@@ -93,7 +94,7 @@ export default function () {
 
                 // 作業開始日と終了日
                 let startTime = ref<string>('00:00')
-                let endTime = ref<string>('02:00')
+                let endTime = ref<string>('00:00')
                 // 毎日作業総時間
                 const workTime = computed(() => {
                     let startTime2 = new Date(`1970-01-01T${startTime.value}:00.000Z`)
