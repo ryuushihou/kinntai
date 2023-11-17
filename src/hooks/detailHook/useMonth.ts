@@ -91,20 +91,9 @@ export default function () {
                 const holidayName = ''
                 const lunchBreak = '1.00'
                 const enEdit = false
-
-                // 作業開始日と終了日
-                let startTime = ref<string>('00:00')
-                let endTime = ref<string>('00:00')
-                // 毎日作業総時間
-                const workTime = computed(() => {
-                    let startTime2 = new Date(`1970-01-01T${startTime.value}:00.000Z`)
-                    let endTime2 = new Date(`1970-01-01T${endTime.value}:00.000Z`)
-                    let timeDifference: number = (endTime2.getTime() as number) - (startTime2.getTime() as number)
-                    return Math.floor(timeDifference / (1000 * 60 * 60)).toString() + '.'
-                        + Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)).toString()
-                })
-
-                // 備考
+                const startTime = ref<string>('00:00')
+                const endTime = ref<string>('00:00')
+                const workTime = ref<string>('0.0')
                 const others = ref<string>('')
 
                 const day = ref({ date, dayOfWeek, isCurrentMonth, holidayName, startTime, endTime, lunchBreak, workTime, others, enEdit })
