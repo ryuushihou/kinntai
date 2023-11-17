@@ -68,19 +68,21 @@ export default function () {
         const lastDay = new Date(targettYear, +targetMonth, 0)
 
         //　カレンダーオブジェクト作成
-        calendarData.value.year = currentDate.getFullYear()
+        calendarData.value.year = parseInt(year)
         calendarData.value.month = targetMonth
         calendarData.value.days = []
 
         // 目標月の勤務表既存データがあれば、読み込む
         let existCalendarData: boolean = false
-        calendarDataInfo.calendarDataArr.forEach(arr => {
+        calendarDataInfo.calendarDataArr = calendarDataInfo.calendarDataArr.filter(arr => {
             if (arr.year === targettYear && arr.month === targetMonth) {
                 arr.days.forEach(day => day.enEdit = false)
                 calendarData.value.days = arr.days
                 existCalendarData = true
             }
-        })
+            // 今年以外のデータを削除
+            return arr.year === currentDate.getFullYear();
+        });
 
         if (!existCalendarData) {
             let currentDatePointer = new Date(firstDay);
@@ -104,7 +106,6 @@ export default function () {
             // 祝日取得と設定
             getHolidayInfo(targetDate, calendarData.value.days)
         }
-
     }
 
     // 曜日を漢字に変換

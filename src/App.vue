@@ -53,6 +53,7 @@ import Detail from './components/Detail.vue'
 import useSelectedMonth from './hooks/appHook/useSelectedMonth'
 import useLayout from './hooks/appHook/useLayout'
 import useCalendarDataStore from './store/calendarData'
+import { ElMessage } from 'element-plus'
 
 // 選択した月に関するHooks
 const { selectedMonth, monthOfSelected, toKinndai, backToSelectMonth } = useSelectedMonth()
@@ -75,6 +76,7 @@ const save = () => {
   const [year, month] = formattedMonth.split('-')
   let existCalendarData: boolean = false
   calendarDataInfo.calendarDataArr.forEach(arr => {
+    arr.days.forEach(day => day.enEdit = false)
     if (arr.year === parseInt(year) && arr.month === parseInt(month)) {
       arr = detailRef.value.calendarData
       existCalendarData = true
@@ -83,6 +85,11 @@ const save = () => {
   if (!existCalendarData) {
     calendarDataInfo.calendarDataArr.push(detailRef.value.calendarData)
   }
+  ElMessage({
+    showClose: true,
+    message: '保存しました',
+    type: 'success',
+  })
 }
 
 </script>
