@@ -10,7 +10,8 @@ interface daysType {
     lunchBreak: string,
     workTime: string,
     others: string,
-    enEdit: boolean
+    enEdit: boolean,
+    isWorkDay: boolean
 }
 interface calendarDataInfo {
     year: number,

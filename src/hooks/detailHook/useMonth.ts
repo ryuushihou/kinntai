@@ -15,7 +15,8 @@ export default function () {
         lunchBreak: string,
         workTime: string,
         others: string,
-        enEdit: boolean
+        enEdit: boolean,
+        isWorkDay: boolean
     }
     interface calendarDataInfo {
         year: number,
@@ -59,7 +60,6 @@ export default function () {
         const targettYear = parseInt(year)
         // 目標月
         const targetMonth = parseInt(month)
-
         // 現時点の日付
         const currentDate = new Date()
         // 指定月の一日
@@ -97,8 +97,9 @@ export default function () {
                 const endTime = ref<string>('00:00')
                 const workTime = ref<string>('0.0')
                 const others = ref<string>('')
+                const isWorkDay = ref<boolean>(true)
 
-                const day = ref({ date, dayOfWeek, isCurrentMonth, holidayName, startTime, endTime, lunchBreak, workTime, others, enEdit })
+                const day = ref({ date, dayOfWeek, isCurrentMonth, holidayName, startTime, endTime, lunchBreak, workTime, others, enEdit, isWorkDay })
                 calendarData.value.days.push(day.value)
                 currentDatePointer.setDate(day.value.date + 1)
             }
