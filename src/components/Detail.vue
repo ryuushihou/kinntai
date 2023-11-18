@@ -22,7 +22,7 @@
                                 <el-text style="color: darkgray;">{{ scope.row.startTime }}</el-text>
                             </div>
                             <div v-show="scope.row.isWorkDay">
-                                <el-text style="color: black;">{{ scope.row.startTime }}</el-text>
+                                <el-text style="color: black;font-size:20px">{{ scope.row.startTime }}</el-text>
                             </div>
                         </div>
                         <div v-show="selectedMonth.theme">
@@ -30,7 +30,7 @@
                                 <el-text style="color: dimgray;">{{ scope.row.startTime }}</el-text>
                             </div>
                             <div v-show="scope.row.isWorkDay">
-                                <el-text style="color: ghostwhite;">{{ scope.row.startTime }}</el-text>
+                                <el-text style="color: gainsboro;font-size:20px">{{ scope.row.startTime }}</el-text>
                             </div>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                                 <el-text style="color: darkgray;">{{ scope.row.endTime }}</el-text>
                             </div>
                             <div v-show="scope.row.isWorkDay">
-                                <el-text style="color: black;">{{ scope.row.endTime }}</el-text>
+                                <el-text style="color: black;font-size:20px">{{ scope.row.endTime }}</el-text>
                             </div>
                         </div>
                         <div v-show="selectedMonth.theme">
@@ -56,7 +56,7 @@
                                 <el-text style="color: dimgray;">{{ scope.row.endTime }}</el-text>
                             </div>
                             <div v-show="scope.row.isWorkDay">
-                                <el-text style="color: ghostwhite;">{{ scope.row.endTime }}</el-text>
+                                <el-text style="color: gainsboro;font-size:20px">{{ scope.row.endTime }}</el-text>
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                 <template #default="scope">
                     <div v-show="!selectedMonth.theme">
                         <div v-show="scope.row.isWorkDay">
-                            <el-text style="color: black;" type="info">{{ scope.row.lunchBreak }}</el-text>
+                            <el-text style="color: black;font-size:20px" type="info">{{ scope.row.lunchBreak }}</el-text>
                         </div>
                         <div v-show="!scope.row.isWorkDay">
                             <el-text style="color: darkgray;" type="info">{{ scope.row.lunchBreak }}</el-text>
@@ -74,7 +74,8 @@
                     </div>
                     <div v-show="selectedMonth.theme">
                         <div v-show="scope.row.isWorkDay">
-                            <el-text style="color: ghostwhite;" type="info">{{ scope.row.lunchBreak }}</el-text>
+                            <el-text style="color: gainsboro;font-size:20px" type="info">{{ scope.row.lunchBreak
+                            }}</el-text>
                         </div>
                         <div v-show="!scope.row.isWorkDay">
                             <el-text style="color: dimgray;" type="info">{{ scope.row.lunchBreak }}</el-text>
@@ -86,8 +87,8 @@
                 <template #default="scope">
                     <div v-show="!selectedMonth.theme">
                         <div v-show="scope.row.isWorkDay">
-                            <el-text style="color: black;" type="info">{{ parseFloat(scope.row.workTime) < 0 ? '0.0' :
-                                scope.row.workTime }}</el-text>
+                            <el-text style="color: black;font-size:20px" type="info">{{ parseFloat(scope.row.workTime) < 0
+                                ? '0.0' : scope.row.workTime }}</el-text>
                         </div>
                         <div v-show="!scope.row.isWorkDay">
                             <el-text type="info">{{ parseFloat(scope.row.workTime) < 0 ? '0.0' : scope.row.workTime
@@ -96,8 +97,8 @@
                     </div>
                     <div v-show="selectedMonth.theme">
                         <div v-show="scope.row.isWorkDay">
-                            <el-text style="color: ghostwhite;" type="info">{{ parseFloat(scope.row.workTime) < 0 ? '0.0' :
-                                scope.row.workTime }}</el-text>
+                            <el-text style="color: gainsboro;font-size:20px" type="info">{{ parseFloat(scope.row.workTime) <
+                                0 ? '0.0' : scope.row.workTime }}</el-text>
                         </div>
                         <div v-show="!scope.row.isWorkDay">
                             <el-text style="color: dimgray;" type="info">{{ parseFloat(scope.row.workTime) < 0 ? '0.0' :
@@ -113,10 +114,12 @@
                     </div>
                     <div v-show="!scope.row.enEdit">
                         <div v-show="scope.row.isWorkDay">
-                            <el-text style="color: cornflowerblue;" type="info">{{ scope.row.others }}</el-text>
+                            <el-text style="color: cornflowerblue;font-size:20px" type="info">{{ scope.row.others
+                            }}</el-text>
                         </div>
                         <div v-show="!scope.row.isWorkDay">
-                            <el-text style="color: cornflowerblue;" type="info">{{ scope.row.others }}</el-text>
+                            <el-text style="color: cornflowerblue;font-size:20px" type="info">{{ scope.row.others
+                            }}</el-text>
                         </div>
                     </div>
                 </template>
@@ -128,8 +131,8 @@
             </el-table-column>
         </el-table>
         <div style="height: 40px; display: flex; align-items: center; justify-content: center; text-align: center;">
-            <el-text style=" font-size: 30px;color: cornflowerblue;" type="info">合計時間:{{ totalWorkTimeTemp <
-                0 ? 0 : totalWorkTimeTemp }}</el-text>
+            <el-text style=" font-size: 30px;color: cornflowerblue;" type="info">合計時間:{{ totalWorkTimeTemp < 0 ? 0 :
+                totalWorkTimeTemp }}</el-text>
         </div>
     </div>
 </template>
@@ -206,24 +209,28 @@ const rowState = ({ row }: { row: daysType }) => {
         if (!selectedMonth.theme) {
             return {
                 backgroundColor: 'rgb(223 223 223)',
-                color: 'darkgray'
+                color: 'darkgray',
+                fontSize: '15px'
             }
         } else {
             return {
                 backgroundColor: '#292929',
-                color: 'dimgray'
+                color: 'dimgray',
+                fontSize: '15px'
             }
         }
     } else {
         if (!selectedMonth.theme) {
             return {
                 color: 'black',
-                fontWeight: '500'
+                // fontWeight: '500',
+                fontSize: '20px'
             }
         } else {
             return {
-                color: 'ghostwhite',
-                fontWeight: '500'
+                color: 'gainsboro',
+                // fontWeight: '500',
+                fontSize: '20px'
             }
         }
     }
