@@ -86,18 +86,22 @@
                 <template #default="scope">
                     <div v-show="!selectedMonth.theme">
                         <div v-show="scope.row.isWorkDay">
-                            <el-text style="color: black;" type="info">{{ scope.row.workTime }}</el-text>
+                            <el-text style="color: black;" type="info">{{ parseFloat(scope.row.workTime) < 0 ? '0.0' :
+                                scope.row.workTime }}</el-text>
                         </div>
                         <div v-show="!scope.row.isWorkDay">
-                            <el-text type="info">{{ scope.row.workTime }}</el-text>
+                            <el-text type="info">{{ parseFloat(scope.row.workTime) < 0 ? '0.0' : scope.row.workTime
+                            }}</el-text>
                         </div>
                     </div>
                     <div v-show="selectedMonth.theme">
                         <div v-show="scope.row.isWorkDay">
-                            <el-text style="color: ghostwhite;" type="info">{{ scope.row.workTime }}</el-text>
+                            <el-text style="color: ghostwhite;" type="info">{{ parseFloat(scope.row.workTime) < 0 ? '0.0' :
+                                scope.row.workTime }}</el-text>
                         </div>
                         <div v-show="!scope.row.isWorkDay">
-                            <el-text style="color: dimgray;" type="info">{{ scope.row.workTime }}</el-text>
+                            <el-text style="color: dimgray;" type="info">{{ parseFloat(scope.row.workTime) < 0 ? '0.0' :
+                                scope.row.workTime }}</el-text>
                         </div>
                     </div>
                 </template>
@@ -124,7 +128,8 @@
             </el-table-column>
         </el-table>
         <div style="height: 40px; display: flex; align-items: center; justify-content: center; text-align: center;">
-            <el-text style=" font-size: 30px;color: cornflowerblue;" type="info">合計時間:179</el-text>
+            <el-text style=" font-size: 30px;color: cornflowerblue;" type="info">合計時間:{{ totalWorkTimeTemp <
+                0 ? 0 : totalWorkTimeTemp }}</el-text>
         </div>
     </div>
 </template>
@@ -165,13 +170,18 @@ onMounted(() => {
     getMonthInfo(formattedMonth)
 })
 
-watch(() => calendarData.value, () => {
+// 合計時間
+let totalWorkTimeTemp = ref<number>(0)
+
+watch(() => calendarData.value.days, () => {
+    totalWorkTimeTemp.value = 0
     calendarData.value.days.forEach(day => {
         let startTime = new Date(`1970-01-01T${day.startTime}:00.000Z`)
         let endTime = new Date(`1970-01-01T${day.endTime}:00.000Z`)
         let timeDifference: number = (endTime.getTime() as number) - (startTime.getTime() as number) - (parseFloat(day.lunchBreak) * 60 * 60 * 1000)
         day.workTime = Math.floor(timeDifference / (1000 * 60 * 60)).toString() + '.'
             + Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)).toString()
+        totalWorkTimeTemp.value += parseFloat(day.workTime)
     })
 }, { deep: true })
 
