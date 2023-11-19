@@ -65,20 +65,53 @@
             <el-table-column label="昼休(時間)" width="110">
                 <template #default="scope">
                     <div v-show="!selectedMonth.theme">
-                        <div v-show="scope.row.isWorkDay">
-                            <el-text style="color: black;font-size:20px" type="info">{{ scope.row.lunchBreak }}</el-text>
+                        <div v-show="scope.row.enEdit">
+                            <div v-show="scope.row.isWorkDay">
+                                <el-select v-model="scope.row.lunchBreak" class="m-2" placeholder="Select">
+                                    <el-option v-for="item in lunchBreakOptions" :key="item.value" :label="item.label"
+                                        :value="item.value" />
+                                </el-select>
+                            </div>
+                            <div v-show="!scope.row.isWorkDay">
+                                <el-select v-model="scope.row.lunchBreak" class="m-2" placeholder="Select">
+                                    <el-option v-for="item in lunchBreakOptions" :key="item.value" :label="item.label"
+                                        :value="item.value" />
+                                </el-select>
+                            </div>
                         </div>
-                        <div v-show="!scope.row.isWorkDay">
-                            <el-text style="color: darkgray;" type="info">{{ scope.row.lunchBreak }}</el-text>
+                        <div v-show="!scope.row.enEdit">
+                            <div v-show="scope.row.isWorkDay">
+                                <el-text style="color: black;font-size:20px" type="info">{{ scope.row.lunchBreak
+                                }}</el-text>
+                            </div>
+                            <div v-show="!scope.row.isWorkDay">
+                                <el-text style="color: darkgray;" type="info">{{ scope.row.lunchBreak }}</el-text>
+                            </div>
                         </div>
                     </div>
                     <div v-show="selectedMonth.theme">
-                        <div v-show="scope.row.isWorkDay">
-                            <el-text style="color: gainsboro;font-size:20px" type="info">{{ scope.row.lunchBreak
-                            }}</el-text>
+                        <div v-show="scope.row.enEdit">
+                            <div v-show="scope.row.isWorkDay">
+                                <el-select v-model="scope.row.lunchBreak" class="m-2" placeholder="Select">
+                                    <el-option v-for="item in lunchBreakOptions" :key="item.value" :label="item.label"
+                                        :value="item.value" />
+                                </el-select>
+                            </div>
+                            <div v-show="!scope.row.isWorkDay">
+                                <el-select v-model="scope.row.lunchBreak" class="m-2" placeholder="Select">
+                                    <el-option v-for="item in lunchBreakOptions" :key="item.value" :label="item.label"
+                                        :value="item.value" />
+                                </el-select>
+                            </div>
                         </div>
-                        <div v-show="!scope.row.isWorkDay">
-                            <el-text style="color: dimgray;" type="info">{{ scope.row.lunchBreak }}</el-text>
+                        <div v-show="!scope.row.enEdit">
+                            <div v-show="scope.row.isWorkDay">
+                                <el-text style="color: gainsboro;font-size:20px" type="info">{{ scope.row.lunchBreak
+                                }}</el-text>
+                            </div>
+                            <div v-show="!scope.row.isWorkDay">
+                                <el-text style="color: dimgray;" type="info">{{ scope.row.lunchBreak }}</el-text>
+                            </div>
                         </div>
                     </div>
                 </template>
@@ -126,13 +159,21 @@
             </el-table-column>
             <el-table-column v-if="usebable" prop="enEdit" label="操作" width="60">
                 <template #default="scope">
-                    <el-button :icon="Edit" circle @click="scope.row.enEdit = !scope.row.enEdit" />
+                    <el-button :icon="Edit" @click="scope.row.enEdit = !scope.row.enEdit" />
                 </template>
             </el-table-column>
         </el-table>
-        <div style="height: 40px; display: flex; align-items: center; justify-content: center; text-align: center;">
-            <el-text style=" font-size: 30px;color: cornflowerblue;" type="info">合計時間:{{ totalWorkTimeTemp < 0 ? 0 :
-                totalWorkTimeTemp }}</el-text>
+        <div style="height: 40px; text-align: center;margin-top: 10px;">
+            <div v-show="!selectedMonth.theme">
+                <el-text style=" font-size: 30px;color: black;font-weight: 500;" type="info">合計時間:<span
+                        style="color: red;">{{
+                            totalWorkTimeTemp < 0 ? 0 : totalWorkTimeTemp }}</span></el-text>
+            </div>
+            <div v-show="selectedMonth.theme">
+                <el-text style=" font-size: 30px;color: gainsboro;font-weight: 500;" type="info">合計時間:
+                    <span style="color: red;">{{ totalWorkTimeTemp < 0 ? 0 : totalWorkTimeTemp }}</span>
+                </el-text>
+            </div>
         </div>
     </div>
 </template>
@@ -154,7 +195,7 @@ let usebable = ref<boolean>(true)
 const pdfExport = () => {
     usebable.value = false
     setTimeout(() => {
-        const style = '@page{}' + '@media print {td{border:1px solid #000;text-align:center;height:40px}th{border:1px solid #000}}'
+        const style = '@page{}' + '@media print {td{border:1px solid #000;text-align:center;height:40px;font-weight:500}th{border:1px solid #000}}'
         printJS({
             printable: 'tbl',
             type: 'html',
@@ -223,18 +264,39 @@ const rowState = ({ row }: { row: daysType }) => {
         if (!selectedMonth.theme) {
             return {
                 color: 'black',
-                // fontWeight: '500',
                 fontSize: '20px'
             }
         } else {
             return {
                 color: 'gainsboro',
-                // fontWeight: '500',
                 fontSize: '20px'
             }
         }
     }
 }
+
+const lunchBreakOptions = [
+    {
+        value: '0.00',
+        label: '0.00'
+    },
+    {
+        value: '0.50',
+        label: '0.50'
+    },
+    {
+        value: '1.00',
+        label: '1.00'
+    },
+    {
+        value: '2.00',
+        label: '2.00'
+    },
+    {
+        value: '3.00',
+        label: '3.00'
+    }
+]
 
 </script>
 <style scoped lang="scss">

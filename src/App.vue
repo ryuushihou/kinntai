@@ -18,9 +18,9 @@
       <div style="display: flex; align-items: center; justify-content: center; text-align: center; margin-top: 20px;">
         <el-text style="margin-left: 10px;" tag="b" type="info" size="large">{{ monthOfSelected }}</el-text>
         <div style="margin-left: auto;">
-          <el-button round @click="backToSelectMonth()">月分選択へ</el-button>
-          <el-button round @click="print()">PDF出力</el-button>
-          <el-button round @click="save()">保存</el-button>
+          <el-button @click="backToSelectMonth()">月分選択へ</el-button>
+          <el-button @click="print()">PDF出力</el-button>
+          <el-button @click="save()">保存</el-button>
         </div>
       </div>
       <div style="margin-top: 10px; display: flex; justify-content: center; align-items: center;" class="inline-flex"
@@ -42,7 +42,7 @@
       </svg>
       <el-date-picker style="margin-left: 10px;" v-model="monthOfSelected" type="month" value-format="YYYY年MM月"
         size="large" placeholder="月分選択ください" />
-      <el-button style="margin-left: 10px;" round @click="toKinndai()">勤務表へ</el-button>
+      <el-button style="margin-left: 10px;" @click="toKinndai()">勤務表へ</el-button>
     </div>
   </div>
 </template>
