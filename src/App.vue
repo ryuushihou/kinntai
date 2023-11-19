@@ -44,6 +44,19 @@
         size="large" placeholder="月分選択ください" />
       <el-button style="margin-left: 10px;" @click="toKinndai()">勤務表へ</el-button>
     </div>
+    <div>
+      <div style="display: flex;margin-top: 500px;margin-left: 200px">
+        <div style="height: 100px; width: 150px; align-items: center; display: flex; align-self: flex-start;"
+          class="block border rounded-xl overflow-hidden p-4 hover:ring-2 ring-brand-primary transition-all group duration-200 ease-in-out hover:border-l-8 hover:border-brand-primary cursor-pointer relative bg-yellow-100/50 border-yellow-400">
+          <span style="font-weight: 500; text-align: center; margin: auto;">作業開始</span>
+        </div>
+        <div
+          style="height: 100px; width: 150px; align-items: center; display: flex; align-self: flex-start;margin-left: 20px;"
+          class="block border rounded-xl overflow-hidden p-4 hover:ring-2 ring-brand-primary transition-all group duration-200 ease-in-out hover:border-l-8 hover:border-brand-primary cursor-pointer relative bg-yellow-100/50 border-yellow-400">
+          <span style="font-weight: 500; text-align: center; margin: auto;">作業終了</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
