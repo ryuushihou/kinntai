@@ -157,9 +157,21 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column v-if="usebable" prop="enEdit" label="操作" width="60">
+            <el-table-column v-if="usebable" prop="enEdit" label="操作" width="210">
                 <template #default="scope">
-                    <el-button :icon="Edit" @click="scope.row.enEdit = !scope.row.enEdit" />
+                    <el-button v-show="!scope.row.enEdit" :icon="Lock" @click="scope.row.enEdit = !scope.row.enEdit" />
+                    <el-button v-show="scope.row.enEdit" :icon="Unlock" @click="scope.row.enEdit = !scope.row.enEdit" />
+                    <el-button @click="autoInput(scope.row)">
+                        <i>
+                            <svg t="1700458134694" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" p-id="19192" width="16" height="16">
+                                <path
+                                    d="M395.765333 586.570667h-171.733333c-22.421333 0-37.888-22.442667-29.909333-43.381334L364.768 95.274667A32 32 0 0 1 394.666667 74.666667h287.957333c22.72 0 38.208 23.018667 29.632 44.064l-99.36 243.882666h187.050667c27.509333 0 42.186667 32.426667 24.042666 53.098667l-458.602666 522.56c-22.293333 25.408-63.626667 3.392-54.976-29.28l85.354666-322.421333z"
+                                    fill="#000000" p-id="19193"></path>
+                            </svg>
+                        </i>
+                    </el-button>
+                    <el-button :icon="Delete" @click="resetRow(scope.row)" />
                 </template>
             </el-table-column>
         </el-table>
@@ -180,15 +192,15 @@
   
 <script lang="ts" setup>
 import { ref, onMounted, watch } from 'vue';
-import { Edit } from '@element-plus/icons-vue'
+import { EditPen, Lock, Unlock, Delete } from '@element-plus/icons-vue'
 import useMonth from '../hooks/detailHook/useMonth'
 import printJS from 'print-js'
 
 // 選択した月を取得
 let selectedMonth = defineProps(['month', 'theme'])
 
-// 選択した月の情報を取得
-const { getMonthInfo, calendarData } = useMonth()
+// 選択した月の情報と関連Hooks取得
+const { getMonthInfo, calendarData, autoInput, resetRow } = useMonth()
 
 // pdf出力
 let usebable = ref<boolean>(true)

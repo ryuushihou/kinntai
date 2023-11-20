@@ -14,13 +14,30 @@
       </div>
     </div>
     <div v-if="selectedMonth">
-      <p style="text-align: center;">勤務表</p>
+      <div style="height: 30px;">
+        <p style="text-align: center;font-weight: 800; transition: font-size 0.3s; font-size: 20px;"
+          onmouseover="this.style.fontSize='30px'" onmouseout="this.style.fontSize='20px'">勤務表</p>
+      </div>
       <div style="display: flex; align-items: center; justify-content: center; text-align: center; margin-top: 20px;">
-        <el-text style="margin-left: 10px;" tag="b" type="info" size="large">{{ monthOfSelected }}</el-text>
-        <div style="margin-left: auto;">
-          <el-button @click="backToSelectMonth()">月分選択へ</el-button>
-          <el-button @click="print()">PDF出力</el-button>
-          <el-button @click="save()">保存</el-button>
+        <el-text style="margin-left: 10px; font-size: 20px; transition: font-size 0.3s;" tag="b" type="info"
+          @mouseover="$event.target.style.fontSize = '24px'" @mouseout="$event.target.style.fontSize = '20px'">
+          {{ monthOfSelected }}
+        </el-text>
+        <div style="margin-left: auto;display: flex;">
+          <div @click="backToSelectMonth()"
+            style="height: 45px; width: 125px; margin-left: 10px; display: flex; align-items: center;"
+            class="transition-all group duration-200 ease-in-out hover:border-l-8 hover:ring-2 ring-brand-primary hover:border-brand-primary cursor-pointer relative bg-white block bg-white border rounded-xl p-4 transition-all group duration-200 ease-in-out hover:border-l-8 hover:ring-2 ring-brand-primary hover:border-brand-primary cursor-pointer relative bg-white">
+            <span style="font-weight: 500; font-size: 15px; text-align: center;">月分選択へ</span>
+          </div>
+          <div @click="print()" style="height: 45px; width: 125px; margin-left: 10px; display: flex; align-items: center;"
+            class="transition-all group duration-200 ease-in-out hover:border-l-8 hover:ring-2 ring-brand-primary hover:border-brand-primary cursor-pointer relative bg-white block bg-white border rounded-xl p-4 transition-all group duration-200 ease-in-out hover:border-l-8 hover:ring-2 ring-brand-primary hover:border-brand-primary cursor-pointer relative bg-white">
+            <span style="font-weight: 500; font-size: 15px; text-align: center; margin: 0 auto;">PDF出力</span>
+          </div>
+          <div @click="save()" style="height: 45px; width: 125px; margin-left: 10px; display: flex; align-items: center;"
+            class="transition-all group duration-200 ease-in-out hover:border-l-8 hover:ring-2 ring-brand-primary hover:border-brand-primary cursor-pointer relative bg-white block bg-white border rounded-xl p-4 transition-all group duration-200 ease-in-out hover:border-l-8 hover:ring-2 ring-brand-primary hover:border-brand-primary cursor-pointer relative bg-white">
+            <span style="font-weight: 500; font-size: 15px; text-align: center; margin: 0 auto;">保存</span>
+          </div>
+
         </div>
       </div>
       <div style="margin-top: 10px; display: flex; justify-content: center; align-items: center;" class="inline-flex"
@@ -42,19 +59,9 @@
       </svg>
       <el-date-picker style="margin-left: 10px;" v-model="monthOfSelected" type="month" value-format="YYYY年MM月"
         size="large" placeholder="月分選択ください" />
-      <el-button style="margin-left: 10px;" @click="toKinndai()">勤務表へ</el-button>
-    </div>
-    <div>
-      <div style="display: flex;margin-top: 500px;margin-left: 200px">
-        <div style="height: 100px; width: 150px; align-items: center; display: flex; align-self: flex-start;"
-          class="block border rounded-xl overflow-hidden p-4 hover:ring-2 ring-brand-primary transition-all group duration-200 ease-in-out hover:border-l-8 hover:border-brand-primary cursor-pointer relative bg-yellow-100/50 border-yellow-400">
-          <span style="font-weight: 500; text-align: center; margin: auto;">作業開始</span>
-        </div>
-        <div
-          style="height: 100px; width: 150px; align-items: center; display: flex; align-self: flex-start;margin-left: 20px;"
-          class="block border rounded-xl overflow-hidden p-4 hover:ring-2 ring-brand-primary transition-all group duration-200 ease-in-out hover:border-l-8 hover:border-brand-primary cursor-pointer relative bg-yellow-100/50 border-yellow-400">
-          <span style="font-weight: 500; text-align: center; margin: auto;">作業終了</span>
-        </div>
+      <div @click="toKinndai()" style="height: 45px; width: 130px; margin-left: 10px; display: flex; align-items: center;"
+        class="transition-all group duration-200 ease-in-out hover:border-l-8 hover:ring-2 ring-brand-primary hover:border-brand-primary cursor-pointer relative bg-white block bg-white border rounded-xl p-4 transition-all group duration-200 ease-in-out hover:border-l-8 hover:ring-2 ring-brand-primary hover:border-brand-primary cursor-pointer relative bg-white">
+        <span style="font-weight: 500; text-align: center;">勤務表へ</span>
       </div>
     </div>
   </div>

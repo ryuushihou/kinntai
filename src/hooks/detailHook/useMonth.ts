@@ -141,8 +141,35 @@ export default function () {
         }
     }
 
+
+    interface daysType {
+        date: number,
+        dayOfWeek: string,
+        isCurrentMonth: boolean,
+        holidayName: string,
+        startTime: string,
+        endTime: string,
+        lunchBreak: string,
+        workTime: string,
+        others: string,
+        enEdit: boolean,
+        isWorkDay: boolean
+    }
+    // autoInput
+    const autoInput = (value: daysType) => {
+        value.startTime = '09:00'
+        value.endTime = '18:00'
+        value.lunchBreak = '1.00'
+    }
+    // resetRow
+    const resetRow = (value: daysType) => {
+        value.startTime = '00:00'
+        value.endTime = '00:00'
+        value.lunchBreak = '0.00'
+    }
+
     return {
-        calendarData, holidaysArr, getMonthInfo
+        calendarData, holidaysArr, getMonthInfo, autoInput, resetRow
     }
 }
 
