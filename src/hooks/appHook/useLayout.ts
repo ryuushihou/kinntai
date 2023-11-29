@@ -8,7 +8,7 @@ export default function () {
     }
 
     // ダックモード・ライトモードの切り替え
-    const theme = ref<boolean>(false)
+    const theme = ref<boolean>(true)
     const isDark = useDark({
         storageKey: 'useDarkKey',
         valueDark: 'dark',
