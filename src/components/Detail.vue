@@ -192,7 +192,7 @@
   
 <script lang="ts" setup>
 import { ref, onMounted, watch } from 'vue';
-import { EditPen, Lock, Unlock, Delete } from '@element-plus/icons-vue'
+import { Lock, Unlock, Delete } from '@element-plus/icons-vue'
 import useMonth from '../hooks/detailHook/useMonth'
 import printJS from 'print-js'
 
