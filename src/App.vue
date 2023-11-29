@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div style="display: flex;align-items: center; margin-left: 43%;">
-      <el-switch v-model="theme" :active-action-icon="Sunny" :inactive-action-icon="Moon" @click="toggle()" />
+      <el-switch v-model="theme" :inactive-action-icon="Sunny" :active-action-icon="Moon" @click="toggle()" />
       <div style="margin-left: 5px;">
         <a href="https://github.com/ryuushihou/kinntai">
           <svg t="1699592160273" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
