@@ -157,7 +157,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column v-if="usebable" prop="enEdit" label="操作" width="210">
+            <el-table-column v-if="usebable" prop="enEdit" label="操作" width="250">
                 <template #default="scope">
                     <el-button v-show="!scope.row.enEdit" :icon="Lock" @click="scope.row.enEdit = !scope.row.enEdit" />
                     <el-button v-show="scope.row.enEdit" :icon="Unlock" @click="scope.row.enEdit = !scope.row.enEdit" />
