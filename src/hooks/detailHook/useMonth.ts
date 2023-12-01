@@ -91,7 +91,7 @@ export default function () {
                 const dayOfWeek = weekNameConvert(currentDatePointer.getDay())
                 const isCurrentMonth = currentDatePointer.getMonth() === currentDate.getMonth()
                 const holidayName = ''
-                const lunchBreak = '1.00'
+                const lunchBreak = '0.00'
                 const enEdit = false
                 const startTime = ref<string>('00:00')
                 const endTime = ref<string>('00:00')
