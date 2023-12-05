@@ -232,13 +232,29 @@ let totalWorkTimeTemp = ref<number>(0)
 watch(() => calendarData.value.days, () => {
     totalWorkTimeTemp.value = 0
     calendarData.value.days.forEach(day => {
-        let startTime = new Date(`1970-01-01T${day.startTime}:00.000Z`)
-        let endTime = new Date(`1970-01-01T${day.endTime}:00.000Z`)
-        let timeDifference: number = (endTime.getTime() as number) - (startTime.getTime() as number) - (parseFloat(day.lunchBreak) * 60 * 60 * 1000)
-        day.workTime = Math.floor(timeDifference / (1000 * 60 * 60)).toString() + '.'
-            + Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)).toString()
-        totalWorkTimeTemp.value += parseFloat(day.workTime)
-    })
+        let startTime = new Date(`1970-01-01T${day.startTime}:00.000Z`);
+        let endTime = new Date(`1970-01-01T${day.endTime}:00.000Z`);
+        let timeDifference: number = (endTime.getTime() as number) - (startTime.getTime() as number) - (parseFloat(day.lunchBreak) * 60 * 60 * 1000);
+
+        // 時
+        let hours = Math.floor(timeDifference / (1000 * 60 * 60));
+
+        // 分　15分→0.25
+        let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+        let roundedMinutes = Math.round(minutes / 15) * 15;
+
+        // 60分であれば、1時間を増える
+        if (roundedMinutes === 60) {
+            hours += 1;
+            roundedMinutes = 0;
+        }
+
+        // 00.00
+        day.workTime = (hours + roundedMinutes / 60).toFixed(2);
+
+        totalWorkTimeTemp.value += parseFloat(day.workTime);
+    });
+
 }, { deep: true })
 
 // 行内css
