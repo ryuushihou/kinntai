@@ -174,7 +174,16 @@
                             </svg>
                         </i>
                     </el-button>
-                    <el-button :icon="Delete" @click="resetRow(scope.row)" />
+                    <el-button @click="resetRow(scope.row)">
+                        <i>
+                            <svg t="1706715683845" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" p-id="13325" width="16" height="16">
+                                <path
+                                    d="M426.624 96.568889L71.310222 451.384889a49.123556 49.123556 0 0 0 0 69.546667l355.313778 354.844444c7.253333 7.267556 17.095111 11.363556 27.363556 11.377778l4.266666-0.213334a38.656 38.656 0 0 0 34.474667-38.4V641.052444l11.719111 0.455112a512.881778 512.881778 0 0 1 395.377778 215.182222l52.053333 74.040889 11.605333-89.784889a471.466667 471.466667 0 0 0 3.754667-59.434667l-0.099555-10.737778c-5.688889-250.311111-210.858667-452.366222-466.773334-463.388444l-7.566222-0.241778V123.960889a38.698667 38.698667 0 0 0-66.062222-27.292445l-0.113778-0.099555z"
+                                    fill="#323233" p-id="13326"></path>
+                            </svg>
+                        </i>
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -195,7 +204,7 @@
   
 <script lang="ts" setup>
 import { ref, onMounted, watch } from 'vue';
-import { Lock, Unlock, Delete } from '@element-plus/icons-vue'
+import { Lock, Unlock } from '@element-plus/icons-vue'
 import useMonth from '../hooks/detailHook/useMonth'
 import printJS from 'print-js'
 
