@@ -45,7 +45,7 @@
         <Detail ref='detailRef' :month="monthOfSelected" />
       </div>
     </div>
-    <div>
+    <div v-if="!selectedMonth">
       <div style="display: block; margin-left: auto; width: fit-content;">
         <a href="https://github.com/ryuushihou/kinntai">
           <svg t="1706753412612" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
