@@ -77,7 +77,7 @@ export default function () {
         calendarDataInfo.calendarDataArr = calendarDataInfo.calendarDataArr.filter(arr => {
             if (arr.year === targettYear && arr.month === targetMonth) {
                 arr.days.forEach(day => day.enEdit = false)
-                calendarData.value.days = arr.days
+                calendarData.value.days = JSON.parse(JSON.stringify(arr.days))
                 existCalendarData = true
             }
             // 今年以外のデータを削除
@@ -166,6 +166,7 @@ export default function () {
         value.startTime = '00:00'
         value.endTime = '00:00'
         value.lunchBreak = '0.00'
+        value.others = ''
     }
 
     return {

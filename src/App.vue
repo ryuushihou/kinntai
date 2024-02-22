@@ -102,19 +102,21 @@ const print = () => {
 // 保存
 let calendarDataInfo = useCalendarDataStore()
 const save = () => {
-  const formattedMonth = monthOfSelected.value.replace(/年/, '-').replace(/月/, '')
-  const [year, month] = formattedMonth.split('-')
-  let existCalendarData: boolean = false
-  calendarDataInfo.calendarDataArr.forEach(arr => {
-    arr.days.forEach(day => day.enEdit = false)
-    if (arr.year === parseInt(year) && arr.month === parseInt(month)) {
-      arr = detailRef.value.calendarData
-      existCalendarData = true
-    }
-  })
-  if (!existCalendarData) {
-    calendarDataInfo.calendarDataArr.push(detailRef.value.calendarData)
-  }
+  // const formattedMonth = monthOfSelected.value.replace(/年/, '-').replace(/月/, '')
+  // const [year, month] = formattedMonth.split('-')
+  // let existCalendarData: boolean = false
+  // calendarDataInfo.calendarDataArr.forEach(arr => {
+  //   arr.days.forEach(day => day.enEdit = false)
+  //   if (arr.year === parseInt(year) && arr.month === parseInt(month)) {
+  //     arr = detailRef.value.calendarData
+  //     existCalendarData = true
+  //   }
+  // })
+  // if (!existCalendarData) {
+  //   calendarDataInfo.calendarDataArr.push(detailRef.value.calendarData)
+  // }
+  calendarDataInfo.calendarDataArr.push(detailRef.value.calendarData)
+
   ElMessage({
     showClose: true,
     message: '保存しました',
