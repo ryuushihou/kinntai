@@ -29,7 +29,7 @@
           </div>
           <div @click="print()" style="height: 45px; width: 125px; margin-left: 10px; display: flex; align-items: center;"
             class="transition-all group duration-200 ease-in-out hover:border-l-8 hover:ring-2 ring-brand-primary hover:border-brand-primary cursor-pointer relative bg-white block bg-white border rounded-xl p-4 transition-all group duration-200 ease-in-out hover:border-l-8 hover:ring-2 ring-brand-primary hover:border-brand-primary cursor-pointer relative bg-white">
-            <span style="font-weight: 500; font-size: 15px; text-align: center; margin: 0 auto;">PDF出力</span>
+            <span style="font-weight: 500; font-size: 15px; text-align: center; margin: 0 auto;">PDF出力1</span>
           </div>
           <div @click="save()" style="height: 45px; width: 125px; margin-left: 10px; display: flex; align-items: center;"
             class="transition-all group duration-200 ease-in-out hover:border-l-8 hover:ring-2 ring-brand-primary hover:border-brand-primary cursor-pointer relative bg-white block bg-white border rounded-xl p-4 transition-all group duration-200 ease-in-out hover:border-l-8 hover:ring-2 ring-brand-primary hover:border-brand-primary cursor-pointer relative bg-white">
