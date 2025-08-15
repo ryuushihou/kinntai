@@ -39,6 +39,11 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
+      - name: Disable Jekyll
+        run: |
+          # Ensure output dir exists (in case build failed earlier)
+          mkdir -p dist
+          touch dist/.nojekyll
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
